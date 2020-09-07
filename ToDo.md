@@ -20,8 +20,8 @@ git push ...
 
 # Link to material
 Look at ipynb file located at 
-```https://github.com/Vinohith/Self_Driving_Car_specialization/blob/master/Introduction_to_Self-Driving_Cars/Week_4/Longitudinal_Vehicle_Model.ipynb
-```
+"https://github.com/Vinohith/Self_Driving_Car_specialization/blob/master/Introduction_to_Self-Driving_Cars/Week_4/Longitudinal_Vehicle_Model.ipynb"
+
 Understand the code and run the `ipynb` file at your end. You have to install `ipython notebook` to run ipynb binary files.
 
 
