@@ -24,15 +24,18 @@ class Vehicle():
         # Tire force
         self.c = 10000
         self.F_max = 10000
-
-        # State variables
+        
+        self._init_state_variables()
+    def _init_state_variables(self):
         self.x = 0
         self.v = 5
         self.a = 0
         self.w_e = 100
         self.w_e_dot = 0
 
-        self.sample_time = 0.01
+        self.sample_time = 0.01      
+   def reset(self):
+        self._init_state_variable()
 
 
 class Vehicle(Vehicle):
