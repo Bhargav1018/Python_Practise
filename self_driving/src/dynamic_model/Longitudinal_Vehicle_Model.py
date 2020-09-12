@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 
-class Vehicle():
+class VehicleBaseModel():
     def __init__(self):
         # Throttle to engine torque
         self.a_0 = 400
@@ -25,8 +25,8 @@ class Vehicle():
         self.c = 10000
         self.F_max = 10000
         
-        self._init_state_variables()
-    def _init_state_variables(self):
+        self._init_state()
+    def _init_state(self):
         self.x = 0
         self.v = 5
         self.a = 0
@@ -35,10 +35,20 @@ class Vehicle():
 
         self.sample_time = 0.01      
    def reset(self):
-        self._init_state_variable()
+        self._init_state()
+   def state_update(self):
+        # update equations
+        self.w_e += self.w_e_dot * self.sample_time
+        # since v = a*t
+        self.v += self.a * self.sample_time
+        # since x = v*t - (1/2)*a*t^2
+        self.x += (self.v * self.sample_time) - (0.5 * self.a * self.sample_time ** 2)
+   @abstract
+   def step(self):
+        # Has to Implemented by Sub class.
+        pass
 
-
-class Vehicle(Vehicle):
+class LogitudinalVehicleModel(VehicleBaseModel):
     def step(self, throttle, alpha):
         # ==================================
         #  Implement vehicle model here
@@ -59,30 +69,31 @@ class Vehicle(Vehicle):
             F_x = self.F_max
         # force equation (acceleration)
         self.a = (F_x - F_load) / self.m
+        
+        self.update_state()
+        
+class LateralVehicleModel(VehicleBaseModel):
+    def step(self):
+        pass
+     
 
-        # update equations
-        self.w_e += self.w_e_dot * self.sample_time
-        # since v = a*t
-        self.v += self.a * self.sample_time
-        # since x = v*t - (1/2)*a*t^2
-        self.x += (self.v * self.sample_time) - (0.5 * self.a * self.sample_time ** 2)
+if __init__ === __main__:
+    sample_time = 0.01
+    time_end = 100
+    logitudinal_model = VehicleBaseModel()
 
-sample_time = 0.01
-time_end = 100
-model = Vehicle()
+    t_data = np.arange(0, time_end, sample_time)
+    v_data = np.zeros_like(t_data)
 
-t_data = np.arange(0, time_end, sample_time)
-v_data = np.zeros_like(t_data)
+    # throttle percentage between 0 and 1
+    throttle = 0.2
 
-# throttle percentage between 0 and 1
-throttle = 0.2
+    # incline angle (in radians)
+    alpha = 0
 
-# incline angle (in radians)
-alpha = 0
+    for i in range(t_data.shape[0]):
+        v_data[i] = model.v
+        model.step(throttle, alpha)
 
-for i in range(t_data.shape[0]):
-    v_data[i] = model.v
-    model.step(throttle, alpha)
-
-plt.plot(t_data, v_data)
-plt.show()
+    plt.plot(t_data, v_data)
+    plt.show()
