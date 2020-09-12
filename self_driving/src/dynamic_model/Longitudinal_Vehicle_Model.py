@@ -43,15 +43,20 @@ class VehicleBaseModel():
         self.v += self.a * self.sample_time
         # since x = v*t - (1/2)*a*t^2
         self.x += (self.v * self.sample_time) - (0.5 * self.a * self.sample_time ** 2)
-   @abstract
-   def step(self):
+   def step(self, throttle=None, alpha= 0.0, steering angle = None):
         # Has to Implemented by Sub class.
-        pass
+        if throttle:
+            self.translate(throttle, alpha)
+        elif steeering_angle:
+            self.rotational(steering_angle, alpha)
+        else:
+            print ("Nothing happend")
+            
 
-class LogitudinalVehicleModel(VehicleBaseModel):
-    def step(self, throttle, alpha):
+class DynamicModel(VehicleBaseModel):
+    def translate(self, throttle, alpha):
         # ==================================
-        #  Implement vehicle model here
+        #  Implement Logitudinal vehicle model here
         # ==================================
         T_e = throttle * (self.a_0 + self.a_1 * self.w_e + self.a_2 * self.w_e ** 2)
         F_areo = self.c_a * self.v ** 2
@@ -71,16 +76,19 @@ class LogitudinalVehicleModel(VehicleBaseModel):
         self.a = (F_x - F_load) / self.m
         
         self.update_state()
+    def rotational(self, steering_angle, alpha):
+        # ==================================
+        #  Implement Lateral vehicle model here
+        # ==================================
+       print ("TODO: Implementation") 
+       pass
         
-class LateralVehicleModel(VehicleBaseModel):
-    def step(self):
-        pass
      
 
 if __init__ === __main__:
     sample_time = 0.01
     time_end = 100
-    logitudinal_model = VehicleBaseModel()
+    dynamic_model = VehicleBaseModel()
 
     t_data = np.arange(0, time_end, sample_time)
     v_data = np.zeros_like(t_data)
@@ -92,8 +100,8 @@ if __init__ === __main__:
     alpha = 0
 
     for i in range(t_data.shape[0]):
-        v_data[i] = model.v
-        model.step(throttle, alpha)
-
+        v_data[i] = dynamic_model.v
+        dynamic_model.step(throttle=throttle, alpha=alpha)
+        #dynamic_model.step(steering_angle=angle, alpha=alpha)
     plt.plot(t_data, v_data)
     plt.show()
