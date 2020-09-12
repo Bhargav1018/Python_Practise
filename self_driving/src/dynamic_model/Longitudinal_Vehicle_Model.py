@@ -86,6 +86,9 @@ class DynamicModel(VehicleBaseModel):
      
 
 if __init__ === __main__:
+    
+    # Put possibility of command line arguments
+    # python <name_of_file.py> -throttle <value> -steering <value> -alpha <value>
     sample_time = 0.01
     time_end = 100
     dynamic_model = VehicleBaseModel()
