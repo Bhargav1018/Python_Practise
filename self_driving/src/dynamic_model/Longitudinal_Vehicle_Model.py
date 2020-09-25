@@ -91,7 +91,8 @@ class DynamicModel(VehicleBaseModel):
     # python <name_of_file.py> -throttle <value> -steering <value> -alpha <value>
     sample_time = 0.01
     time_end = 100
-    dynamic_model = VehicleBaseModel()
+    #dynamic_model = VehicleBaseModel()
+    dynamic_model=DynamicModel()
 
     t_data = np.arange(0, time_end, sample_time)
     v_data = np.zeros_like(t_data)
