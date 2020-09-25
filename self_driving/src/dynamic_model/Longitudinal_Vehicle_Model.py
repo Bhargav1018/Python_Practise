@@ -85,7 +85,7 @@ class DynamicModel(VehicleBaseModel):
         
      
 
-if __init__ === __main__:
+#if __init__ === __main__:
     
     # Put possibility of command line arguments
     # python <name_of_file.py> -throttle <value> -steering <value> -alpha <value>
