@@ -75,7 +75,7 @@ class DynamicModel(VehicleBaseModel):
         # force equation (acceleration)
         self.a = (F_x - F_load) / self.m
         
-        self.update_state()
+        self.state_update()
     def rotational(self, steering_angle, alpha):
         # ==================================
         #  Implement Lateral vehicle model here
